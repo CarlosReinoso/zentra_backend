@@ -9,4 +9,11 @@ const StopLossDisciplines = {
   FLEXIBLE: 'FLEXIBLE',
 };
 
-module.exports = { TradingSessions, StopLossDisciplines };
+const PsychologicalState = {
+  STABLE: 'STABLE',
+  OVEREXTENDED: 'OVEREXTENDED',
+  HESITANT: 'HESITANT',
+  AGGRESSIVE: 'AGGRESSIVE',
+};
+
+module.exports = { TradingSessions, StopLossDisciplines, PsychologicalState };
