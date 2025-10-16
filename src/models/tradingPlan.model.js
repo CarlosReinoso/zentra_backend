@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
-
-const TradingSessions = {
-  LONDON: 'LONDON',
-  NY: 'NY',
-  ASIA: 'ASIA',
-};
-
-const StopLossDisciplines = {
-  ALWAYS: 'ALWAYS',
-  FLEXIBLE: 'FLEXIBLE',
-};
+const { TradingSessions, StopLossDisciplines } = require('./enums');
 
 const tradingPlanSchema = mongoose.Schema(
   {

@@ -1,0 +1,65 @@
+const mongoose = require('mongoose');
+const { toJSON } = require('./plugins');
+const { TradingSessions } = require('./enums');
+
+const tradeSchema = mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
+    entryTime: {
+      type: Date,
+      required: true,
+    },
+    exitTime: {
+      type: Date,
+      required: true,
+    },
+    riskPercentUsed: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    profitLoss: {
+      type: Number,
+      required: true,
+    },
+    riskRewardAchieved: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    session: {
+      type: String,
+      enum: Object.values(TradingSessions),
+      required: true,
+    },
+    stopLossHit: {
+      type: Boolean,
+      required: true,
+    },
+    exitedEarly: {
+      type: Boolean,
+      required: true,
+    },
+    targetPercentAchieved: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    notes: {
+      type: String,
+      trim: true,
+    },
+  },
+  { timestamps: true }
+);
+
+tradeSchema.plugin(toJSON);
+
+const Trade = mongoose.model('Trade', tradeSchema);
+
+module.exports = Trade;
