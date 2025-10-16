@@ -22,4 +22,9 @@ const RiskLevel = {
   HIGH: 'HIGH',
 };
 
-module.exports = { TradingSessions, StopLossDisciplines, PsychologicalState, RiskLevel };
+const PerformanceInsightType = {
+  POSITIVE: 'POSITIVE',
+  CONSTRUCTIVE: 'CONSTRUCTIVE',
+};
+
+module.exports = { TradingSessions, StopLossDisciplines, PsychologicalState, RiskLevel, PerformanceInsightType };
