@@ -50,6 +50,17 @@ const userSchema = mongoose.Schema(
   }
 );
 
+// include virtuals in JSON output to allow populated virtual fields to appear
+userSchema.set('toJSON', { virtuals: true });
+
+// virtual relation: User -> TradingPlan (one-to-many)
+userSchema.virtual('tradingPlans', {
+  ref: 'TradingPlan',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: false,
+});
+
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
