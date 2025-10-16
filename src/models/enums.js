@@ -16,4 +16,10 @@ const PsychologicalState = {
   AGGRESSIVE: 'AGGRESSIVE',
 };
 
-module.exports = { TradingSessions, StopLossDisciplines, PsychologicalState };
+const RiskLevel = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+};
+
+module.exports = { TradingSessions, StopLossDisciplines, PsychologicalState, RiskLevel };
