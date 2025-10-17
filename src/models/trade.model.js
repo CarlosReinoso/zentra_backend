@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { toJSON } = require('./plugins');
+const { toJSON, paginate } = require('./plugins');
 const { TradingSessions } = require('./enums');
 
 const tradeSchema = mongoose.Schema(
@@ -64,6 +64,7 @@ tradeSchema.index({ session: 1, entryTime: -1 });
 tradeSchema.index({ entryTime: -1 });
 
 tradeSchema.plugin(toJSON);
+tradeSchema.plugin(paginate);
 
 const Trade = mongoose.model('Trade', tradeSchema);
 
