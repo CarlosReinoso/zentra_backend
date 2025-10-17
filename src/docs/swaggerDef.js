@@ -10,6 +10,11 @@ const swaggerDef = {
   servers: [
     {
       url: `http://localhost:${config.port}/v1`,
+      description: 'Development server',
+    },
+    {
+      url: 'https://zentra-backend-omega.vercel.app/v1',
+      description: 'Staging server',
     },
   ],
 };
