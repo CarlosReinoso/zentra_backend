@@ -81,6 +81,61 @@ components:
         createdAt: 2020-05-12T16:18:04.793Z
         updatedAt: 2020-05-12T16:18:04.793Z
 
+    Trade:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        entryTime:
+          type: string
+          format: date-time
+        exitTime:
+          type: string
+          format: date-time
+        riskPercentUsed:
+          type: number
+          minimum: 0
+        profitLoss:
+          type: number
+        riskRewardAchieved:
+          type: number
+          minimum: 0
+        session:
+          type: string
+          enum: [LONDON, NY, ASIA]
+        stopLossHit:
+          type: boolean
+        exitedEarly:
+          type: boolean
+        targetPercentAchieved:
+          type: number
+          minimum: 0
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      example:
+        id: 5ebac534954b54139806c112
+        userId: 5ebac534954b54139806c111
+        entryTime: 2023-01-01T09:00:00Z
+        exitTime: 2023-01-01T10:30:00Z
+        riskPercentUsed: 2.0
+        profitLoss: 150.0
+        riskRewardAchieved: 1.5
+        session: LONDON
+        stopLossHit: false
+        exitedEarly: false
+        targetPercentAchieved: 100.0
+        notes: "Good trade setup"
+        createdAt: 2020-05-12T16:18:04.793Z
+        updatedAt: 2020-05-12T16:18:04.793Z
+
     Error:
       type: object
       properties:
