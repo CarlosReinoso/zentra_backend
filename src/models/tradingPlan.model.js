@@ -44,6 +44,9 @@ const tradingPlanSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+// Add indexes for better query performance
+tradingPlanSchema.index({ userId: 1 });
+
 tradingPlanSchema.plugin(toJSON);
 
 const TradingPlan = mongoose.model('TradingPlan', tradingPlanSchema);

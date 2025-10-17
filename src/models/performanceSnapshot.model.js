@@ -30,6 +30,12 @@ const performanceInsightSchema = new mongoose.Schema(
 
 const performanceSnapshotSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
     insights: {
       type: [performanceInsightSchema],
       required: true,
@@ -49,6 +55,9 @@ const performanceSnapshotSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Add indexes for better query performance
+performanceSnapshotSchema.index({ userId: 1, timestamp: -1 });
 
 performanceSnapshotSchema.plugin(toJSON);
 

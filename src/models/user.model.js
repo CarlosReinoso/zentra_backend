@@ -53,12 +53,47 @@ const userSchema = mongoose.Schema(
 // include virtuals in JSON output to allow populated virtual fields to appear
 userSchema.set('toJSON', { virtuals: true });
 
-// virtual relation: User -> TradingPlan (one-to-many)
+// virtual relations
 userSchema.virtual('tradingPlans', {
   ref: 'TradingPlan',
   localField: '_id',
   foreignField: 'userId',
   justOne: false,
+});
+
+userSchema.virtual('trades', {
+  ref: 'Trade',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: false,
+});
+
+userSchema.virtual('stateAnalyses', {
+  ref: 'StateAnalysis',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: false,
+});
+
+userSchema.virtual('sessionForecasts', {
+  ref: 'SessionForecast',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: false,
+});
+
+userSchema.virtual('performanceSnapshots', {
+  ref: 'PerformanceSnapshot',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: false,
+});
+
+userSchema.virtual('dashboard', {
+  ref: 'Dashboard',
+  localField: '_id',
+  foreignField: 'userId',
+  justOne: true,
 });
 
 // add plugin that converts mongoose to json

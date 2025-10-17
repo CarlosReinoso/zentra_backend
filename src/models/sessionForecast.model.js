@@ -4,6 +4,12 @@ const { TradingSessions, PsychologicalState, RiskLevel } = require('./enums');
 
 const sessionForecastSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
     session: {
       type: String,
       enum: Object.values(TradingSessions),
@@ -40,6 +46,10 @@ const sessionForecastSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Add indexes for better query performance
+sessionForecastSchema.index({ userId: 1, timestamp: -1 });
+sessionForecastSchema.index({ session: 1, timestamp: -1 });
 
 sessionForecastSchema.plugin(toJSON);
 

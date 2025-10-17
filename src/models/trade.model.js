@@ -58,6 +58,11 @@ const tradeSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+// Add indexes for better query performance
+tradeSchema.index({ userId: 1, entryTime: -1 });
+tradeSchema.index({ session: 1, entryTime: -1 });
+tradeSchema.index({ entryTime: -1 });
+
 tradeSchema.plugin(toJSON);
 
 const Trade = mongoose.model('Trade', tradeSchema);

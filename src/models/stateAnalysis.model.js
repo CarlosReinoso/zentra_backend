@@ -28,6 +28,12 @@ const stateIndicatorSchema = new mongoose.Schema(
 
 const stateAnalysisSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
     state: {
       type: String,
       enum: Object.values(PsychologicalState),
@@ -62,6 +68,10 @@ const stateAnalysisSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Add indexes for better query performance
+stateAnalysisSchema.index({ userId: 1, timestamp: -1 });
+stateAnalysisSchema.index({ state: 1, timestamp: -1 });
 
 stateAnalysisSchema.plugin(toJSON);
 
