@@ -5,3 +5,4 @@ module.exports.Trade = require('./trade.model');
 module.exports.StateAnalysis = require('./stateAnalysis.model');
 module.exports.SessionForecast = require('./sessionForecast.model');
 module.exports.PerformanceSnapshot = require('./performanceSnapshot.model');
+module.exports.Dashboard = require('./dashboard.model');
