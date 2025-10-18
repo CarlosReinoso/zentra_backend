@@ -5,6 +5,7 @@ const tradingPlanRoute = require('./tradingPlan.route');
 const tradeRoute = require('./trade.route');
 const analysisRoute = require('./analysis.route');
 const dashboardRoute = require('./dashboard.route');
+const healthRoute = require('./health.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -34,6 +35,10 @@ const defaultRoutes = [
   {
     path: '/dashboard',
     route: dashboardRoute,
+  },
+  {
+    path: '/health',
+    route: healthRoute,
   },
 ];
 
