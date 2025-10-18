@@ -3,6 +3,8 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const tradingPlanRoute = require('./tradingPlan.route');
 const tradeRoute = require('./trade.route');
+const analysisRoute = require('./analysis.route');
+const dashboardRoute = require('./dashboard.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -24,6 +26,14 @@ const defaultRoutes = [
   {
     path: '/trades',
     route: tradeRoute,
+  },
+  {
+    path: '/analysis',
+    route: analysisRoute,
+  },
+  {
+    path: '/dashboard',
+    route: dashboardRoute,
   },
 ];
 
