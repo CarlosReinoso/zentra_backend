@@ -5,3 +5,4 @@ module.exports.userService = require('./user.service');
 module.exports.tradingPlanService = require('./tradingPlan.service');
 module.exports.tradeService = require('./trade.service');
 module.exports.analysisService = require('./analysis.service');
+module.exports.dashboardService = require('./dashboard.service');
