@@ -25,15 +25,22 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required() {
+        return !this.googleId; // Password is required only if not using Google OAuth
+      },
       trim: true,
       minlength: 8,
       validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
+        if (value && (!value.match(/\d/) || !value.match(/[a-zA-Z]/))) {
           throw new Error('Password must contain at least one letter and one number');
         }
       },
       private: true, // used by the toJSON plugin
+    },
+    googleId: {
+      type: String,
+      sparse: true, // allows multiple null values
+      unique: true,
     },
     role: {
       type: String,
