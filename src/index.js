@@ -4,12 +4,36 @@ const config = require('./config/config');
 const logger = require('./config/logger');
 
 let server;
-mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-  logger.info('Connected to MongoDB');
-  server = app.listen(config.port, () => {
-    logger.info(`Listening to port ${config.port}`);
-  });
+
+// Add connection event listeners for better debugging
+mongoose.connection.on('connected', () => {
+  logger.info('MongoDB connected successfully');
 });
+
+mongoose.connection.on('error', (err) => {
+  logger.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  logger.warn('MongoDB disconnected');
+});
+
+// Log the connection attempt
+logger.info('Attempting to connect to MongoDB...');
+logger.info('MongoDB URL:', config.mongoose.url.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
+
+mongoose
+  .connect(config.mongoose.url, config.mongoose.options)
+  .then(() => {
+    logger.info('Connected to MongoDB successfully');
+    server = app.listen(config.port, () => {
+      logger.info(`Listening to port ${config.port}`);
+    });
+  })
+  .catch((error) => {
+    logger.error('Failed to connect to MongoDB:', error);
+    process.exit(1);
+  });
 
 const exitHandler = () => {
   if (server) {
