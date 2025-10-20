@@ -21,9 +21,20 @@ mongoose.connection.on('disconnected', () => {
 // Log the connection attempt
 logger.info('Attempting to connect to MongoDB...');
 logger.info('MongoDB URL:', config.mongoose.url.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
+logger.info('Environment:', config.env);
+logger.info('Port:', config.port);
+
+// Enhanced connection options for Vercel
+const mongooseOptions = {
+  ...config.mongoose.options,
+  serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+  socketTimeoutMS: 45000, // 45 seconds timeout
+  bufferMaxEntries: 0, // Disable mongoose buffering
+  bufferCommands: false, // Disable mongoose buffering
+};
 
 mongoose
-  .connect(config.mongoose.url, config.mongoose.options)
+  .connect(config.mongoose.url, mongooseOptions)
   .then(() => {
     logger.info('Connected to MongoDB successfully');
     server = app.listen(config.port, () => {
@@ -32,6 +43,11 @@ mongoose
   })
   .catch((error) => {
     logger.error('Failed to connect to MongoDB:', error);
+    logger.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+    });
     process.exit(1);
   });
 
