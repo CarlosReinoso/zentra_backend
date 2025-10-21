@@ -179,6 +179,13 @@ SMTP_PORT=587
 SMTP_USERNAME=email-server-username
 SMTP_PASSWORD=email-server-password
 EMAIL_FROM=support@yourapp.com
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Frontend URL for OAuth redirects
+FRONTEND_URL=http://localhost:3000
 ```
 
 ## Project Structure
@@ -209,6 +216,8 @@ List of available routes:
 **Auth routes**:\
 `POST /v1/auth/register` - register\
 `POST /v1/auth/login` - login\
+`GET /v1/auth/google` - initiate Google OAuth\
+`GET /v1/auth/google/callback` - Google OAuth callback\
 `POST /v1/auth/refresh-tokens` - refresh auth tokens\
 `POST /v1/auth/forgot-password` - send reset password email\
 `POST /v1/auth/reset-password` - reset password\
@@ -309,6 +318,23 @@ An access token is valid for 30 minutes. You can modify this expiration time by 
 After the access token expires, a new access token can be generated, by making a call to the refresh token endpoint (`POST /v1/auth/refresh-tokens`) and sending along a valid refresh token in the request body. This call returns a new access token and a new refresh token.
 
 A refresh token is valid for 30 days. You can modify this expiration time by changing the `JWT_REFRESH_EXPIRATION_DAYS` environment variable in the .env file.
+
+**Google OAuth Authentication**:
+
+The app supports Google OAuth authentication. To set it up:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API
+4. Go to "Credentials" and create OAuth 2.0 Client IDs
+5. Set the authorized redirect URI to: `http://localhost:3000/v1/auth/google/callback` (or your domain)
+6. Copy the Client ID and Client Secret to your `.env` file
+
+The Google OAuth flow works as follows:
+- User visits `/v1/auth/google` to initiate Google sign-in
+- User is redirected to Google for authentication
+- After successful authentication, Google redirects to `/v1/auth/google/callback`
+- The callback generates JWT tokens and redirects to your frontend with the tokens
 
 ## Authorization
 

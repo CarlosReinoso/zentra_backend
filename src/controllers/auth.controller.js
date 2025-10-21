@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
+const config = require('../config/config');
+const logger = require('../config/logger');
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -47,6 +49,25 @@ const verifyEmail = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const googleCallback = catchAsync(async (req, res) => {
+  logger.info('Google OAuth callback received', { userId: req.user && req.user.id, email: req.user && req.user.email });
+
+  if (!req.user) {
+    logger.warn('Google OAuth callback failed - no user found');
+    return res.status(httpStatus.UNAUTHORIZED).json({
+      message: 'Google authentication failed',
+    });
+  }
+
+  const tokens = await tokenService.generateAuthTokens(req.user);
+  logger.info('Google OAuth tokens generated successfully', { userId: req.user.id });
+
+  // Redirect to frontend with tokens (you can modify this based on your frontend setup)
+  const redirectUrl = `${config.frontend.url}/auth/callback?accessToken=${tokens.access.token}&refreshToken=${tokens.refresh.token}`;
+
+  res.redirect(redirectUrl);
+});
+
 module.exports = {
   register,
   login,
@@ -56,4 +77,5 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
+  googleCallback,
 };
