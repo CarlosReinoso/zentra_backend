@@ -294,3 +294,73 @@ module.exports = router;
  *               code: 401
  *               message: verify email failed
  */
+
+/**
+ * @swagger
+ * /auth/google:
+ *   get:
+ *     summary: Initiate Google OAuth authentication
+ *     description: Redirects user to Google OAuth consent screen for authentication
+ *     tags: [Auth]
+ *     responses:
+ *       "302":
+ *         description: Redirect to Google OAuth consent screen
+ *       "500":
+ *         description: Google OAuth configuration error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 500
+ *               message: Google OAuth not configured
+ */
+
+/**
+ * @swagger
+ * /auth/google/callback:
+ *   get:
+ *     summary: Google OAuth callback
+ *     description: Handles the callback from Google OAuth after user authentication. This endpoint is called by Google after successful authentication and redirects to the frontend with JWT tokens.
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: code
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Authorization code from Google
+ *       - in: query
+ *         name: state
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: State parameter for CSRF protection
+ *     responses:
+ *       "302":
+ *         description: Redirect to frontend with tokens
+ *         headers:
+ *           Location:
+ *             description: Frontend URL with access and refresh tokens
+ *             schema:
+ *               type: string
+ *               example: "http://localhost:3000/auth/callback?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *       "401":
+ *         description: Google authentication failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 401
+ *               message: Google authentication failed
+ *       "500":
+ *         description: Internal server error during OAuth processing
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 500
+ *               message: OAuth processing failed
+ */
