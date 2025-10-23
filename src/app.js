@@ -16,6 +16,9 @@ const ApiError = require('./utils/ApiError');
 
 const app = express();
 
+// Trust proxy - needed for OAuth callbacks behind reverse proxy (Vercel, AWS, etc.)
+app.set('trust proxy', true);
+
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);

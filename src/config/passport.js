@@ -32,6 +32,7 @@ const googleStrategy = new GoogleStrategy(
     clientID: config.google.clientId,
     clientSecret: config.google.clientSecret,
     callbackURL: '/v1/auth/google/callback',
+    proxy: true,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
